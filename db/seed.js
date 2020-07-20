@@ -26,12 +26,12 @@ module.exports = async({ usersToCreate = 1, addressesToCreate = 1, campaignsToCr
   })));
 
   const campaigns = await Campaign.create([...Array(campaignsToCreate)].map(() => ({
-    author: mongoose.Types.ObjectId(chance.pickone(users)._id),
+    authorId: mongoose.Types.ObjectId(chance.pickone(users)._id),
     title: chance.sentence({ words: 3 }),
     description: chance.sentence(),
     recipient: chance.name(),
-    address: mongoose.Types.ObjectId(chance.pickone(addresses)._id),
-    defaultPostcard: 'postcard ID to come',
+    addressId: mongoose.Types.ObjectId(chance.pickone(addresses)._id),
+    defaultPostcardId: 'postcard ID to come',
   })));
 
 };

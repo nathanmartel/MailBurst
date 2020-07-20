@@ -12,30 +12,30 @@ describe('Campaign model', () => {
     const address = getAddress();
 
     await Campaign.create({ 
-      author: mongoose.Types.ObjectId(user._id),
+      authorId: mongoose.Types.ObjectId(user._id),
       title: 'Test Campaign', 
       recipient: 'John Doe',
-      address: mongoose.Types.ObjectId(address._id),
-      postcard: 'postcard._id to come',
+      addressId: mongoose.Types.ObjectId(address._id),
+      defaultPostcardId: 'postcard._id to come',
     });
     return request(app)
       .post('/api/v1/campaigns/')
       .send({ 
-        author: user._id,
+        authorId: user._id,
         title: 'Test Campaign', 
         recipient: 'John Doe',
-        address: address._id,
-        postcard: 'postcard._id to come' 
+        addressId: address._id,
+        defaultPostcardId: 'postcard._id to come' 
       })
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.any(String),
-          author: user._id,
+          authorId: user._id,
           title: 'Test Campaign', 
           description: '', 
           recipient: 'John Doe',
-          address: address._id,
-          postcard: 'postcard._id to come' 
+          addressId: address._id,
+          defaultPostcardId: 'postcard._id to come' 
         });
       });
   });
@@ -49,12 +49,12 @@ describe('Campaign model', () => {
       .then(res => {
         expect(res.body).toEqual({
           _id: campaign._id,
-          author: campaign.author, 
+          authorId: campaign.authorId, 
           title: campaign.title, 
           description: campaign.description,
           recipient: campaign.recipient,
-          address: campaign.address,
-          postcard: campaign.postcard,
+          addressId: campaign.addressId,
+          defaultPostcardId: campaign.defaultPostcardId,
         });
       });
   });
