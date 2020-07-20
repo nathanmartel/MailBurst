@@ -1,6 +1,7 @@
 require('dotenv').config();
 const app = require('../lib/app');
 const request = require('supertest');
+const mongoose = require('mongoose');
 const { getUser, getAddress, getCampaign } = require('../db/data-helpers');
 const Campaign = require('../lib/models/Campaign');
 
@@ -11,10 +12,10 @@ describe('Campaign model', () => {
     const address = getAddress();
 
     await Campaign.create({ 
-      author: user._id,
+      author: mongoose.Types.ObjectId(user._id),
       title: 'Test Campaign', 
       recipient: 'John Doe',
-      address: address._id,
+      address: mongoose.Types.ObjectId(address._id),
       postcard: 'postcard._id to come',
     });
     return request(app)
@@ -28,8 +29,10 @@ describe('Campaign model', () => {
       })
       .then(res => {
         expect(res.body).toEqual({
+          _id: expect.any(String),
           author: user._id,
           title: 'Test Campaign', 
+          description: '', 
           recipient: 'John Doe',
           address: address._id,
           postcard: 'postcard._id to come' 
@@ -39,13 +42,6 @@ describe('Campaign model', () => {
 
   it('gets a specific campaign', async() => {
 
-    await Campaign.create({ 
-      street1: '123 Somewhere St.', 
-      city: 'Portland',
-      state: 'OR',
-      zip: '97202',
-    });
-
     const campaign = await getCampaign();
 
     return request(app)
@@ -53,11 +49,11 @@ describe('Campaign model', () => {
       .then(res => {
         expect(res.body).toEqual({
           _id: campaign._id,
-          author: campaign.street1, 
-          title: campaign.street2, 
-          description: campaign.city,
-          recipient: campaign.state,
-          address: campaign.zip,
+          author: campaign.author, 
+          title: campaign.title, 
+          description: campaign.description,
+          recipient: campaign.recipient,
+          address: campaign.address,
           postcard: campaign.postcard,
         });
       });

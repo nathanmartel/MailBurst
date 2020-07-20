@@ -21,6 +21,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/jest": "^26.0.4",
+    "chance": "^1.1.6",
     "eslint": "^7.4.0",
     "jest": "^26.1.0",
     "mongodb-memory-server": "^6.6.1",

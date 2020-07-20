@@ -4,8 +4,6 @@ const app = require('../lib/app');
 const request = require('supertest');
 const User = require('../lib/models/User');
 
-
-
 describe('User model', () => {
   it ('hashes password', () => {
     const user = new User({
@@ -17,14 +15,13 @@ describe('User model', () => {
     expect(user.toJSON().password).toBeUndefined();
   });
 
-  it('logs in a user', async() => {
+  it('creates a user', async() => {
     await User.create({ 
       email: 'test@test.com', 
       password: 'test',
-      createdAt: new Date()
     });
     return request(app)
-      .post('/api/v1/users/login')
+      .post('/api/v1/users/signup')
       .send({ 
         email: 'test@test.com', 
         password: 'test' })
@@ -35,6 +32,24 @@ describe('User model', () => {
           createdAt: expect.any(String),
           firstName: '',
           lastName: '',
+        });
+      });
+  });
+
+  it('logs a user in', async() => {
+      
+    return request(app)
+      .post('/api/v1/users/login')
+      .send({ 
+        email: 'seed@test.com', 
+        password: 'seedtest' })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.any(String),
+          email: 'seed@test.com',
+          createdAt: expect.any(String),
+          firstName: 'Seed',
+          lastName: 'Test',
         });
       });
   });
