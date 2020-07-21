@@ -2,16 +2,10 @@ require('dotenv').config();
 const app = require('../lib/app');
 const request = require('supertest');
 const { getAddress } = require('../db/data-helpers');
-const Address = require('../lib/models/Address');
 
 describe('Address model', () => {
   it('creates an address', async() => {
-    await Address.create({ 
-      street1: '123 Somewhere St.', 
-      city: 'Portland',
-      state: 'OR',
-      zip: '97202',
-    });
+
     return request(app)
       .post('/api/v1/addresses/')
       .send({ 

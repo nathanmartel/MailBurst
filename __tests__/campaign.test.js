@@ -1,41 +1,33 @@
 require('dotenv').config();
 const app = require('../lib/app');
 const request = require('supertest');
-const mongoose = require('mongoose');
-const { getUser, getAddress, getCampaign } = require('../db/data-helpers');
-const Campaign = require('../lib/models/Campaign');
+const { getUser, getAddress, getCampaign, getPostcard } = require('../db/data-helpers');
 
 describe('Campaign model', () => {
   it('creates a campaign', async() => {
     
     const user = await getUser();
     const address = await getAddress();
+    const postcard = await getPostcard();
 
-    await Campaign.create({ 
-      authorId: user._id,
-      title: 'Test Campaign', 
-      recipient: 'John Doe',
-      addressId: address._id,
-      defaultPostcardId: 'postcard._id to come',
-    });
     return request(app)
       .post('/api/v1/campaigns/')
       .send({ 
-        authorId: user._id,
+        userId: user._id,
         title: 'Test Campaign', 
         recipient: 'John Doe',
         addressId: address._id,
-        defaultPostcardId: 'postcard._id to come' 
+        defaultPostcardId: postcard._id 
       })
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.any(String),
-          authorId: user._id,
+          userId: user._id,
           title: 'Test Campaign', 
           description: '', 
           recipient: 'John Doe',
           addressId: address._id,
-          defaultPostcardId: 'postcard._id to come' 
+          defaultPostcardId: postcard._id
         });
       });
   });
@@ -49,7 +41,7 @@ describe('Campaign model', () => {
       .then(res => {
         expect(res.body).toEqual({
           _id: campaign._id,
-          authorId: campaign.authorId, 
+          userId: campaign.userId, 
           title: campaign.title, 
           description: campaign.description,
           recipient: campaign.recipient,

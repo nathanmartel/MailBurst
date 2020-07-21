@@ -16,10 +16,7 @@ describe('User model', () => {
   });
 
   it('creates a user', async() => {
-    await User.create({ 
-      email: 'test@test.com', 
-      password: 'test',
-    });
+
     return request(app)
       .post('/api/v1/users/signup')
       .send({ 
