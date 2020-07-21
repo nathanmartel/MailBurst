@@ -8,14 +8,14 @@ const Campaign = require('../lib/models/Campaign');
 describe('Campaign model', () => {
   it('creates a campaign', async() => {
     
-    const user = getUser();
-    const address = getAddress();
+    const user = await getUser();
+    const address = await getAddress();
 
     await Campaign.create({ 
-      authorId: mongoose.Types.ObjectId(user._id),
+      authorId: user._id,
       title: 'Test Campaign', 
       recipient: 'John Doe',
-      addressId: mongoose.Types.ObjectId(address._id),
+      addressId: address._id,
       defaultPostcardId: 'postcard._id to come',
     });
     return request(app)
