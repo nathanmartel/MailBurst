@@ -15,7 +15,6 @@ describe('Postcard model', () => {
       .post('/api/v1/postcards/')
       .send({ 
         userId: user._id,
-        campaignId: campaign._id,
         title: 'Test Postcard', 
         frontImage: 'http://placekitten.com/200/300',
         backMessage: 'Lorem ipsum dolor',
@@ -25,7 +24,6 @@ describe('Postcard model', () => {
         expect(res.body).toEqual({
           _id: expect.any(String),
           userId: user._id,
-          campaignId: campaign._id,
           isDefault: false, 
           frontImage: 'http://placekitten.com/200/300',
           frontMessage: '',
@@ -47,7 +45,6 @@ describe('Postcard model', () => {
         expect(res.body).toEqual({
           _id: postcard._id,
           userId: postcard.userId, 
-          campaignId: postcard.campaignId,
           isDefault: false, 
           frontImage: postcard.frontImage,
           frontMessage: postcard.frontMessage,
