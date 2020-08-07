@@ -35,6 +35,26 @@ describe('Campaign model', () => {
       });
   });
 
+
+  it('gets all campaigns', async() => {
+
+    return request(app)
+      .get('/api/v1/campaigns')
+      .then(res => {
+        expect(res.body).toContainEqual({
+          _id: expect.any(String),
+          userId: expect.any(String), 
+          title: expect.any(String), 
+          description: expect.any(String),
+          recipient: expect.any(String),
+          addressId: expect.any(String),
+          defaultPostcardId: expect.any(String),
+          postcardIds: expect.any(Array),
+        });
+      });
+  });
+
+
   it('gets a specific campaign', async() => {
 
     const campaign = await getCampaign();
@@ -65,6 +85,5 @@ describe('Campaign model', () => {
         });
       });
   });
-
 
 });
