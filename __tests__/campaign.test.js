@@ -59,6 +59,7 @@ describe('Campaign model', () => {
 
     const campaign = await getCampaign();
     const postcards = await Promise.resolve(fetchPostcards(campaign.postcardIds));
+    const address = await Promise.resolve(fetchAddress(campaign.addressId));
 
     async function fetchPostcards(arr) {
       const postcards = [];
@@ -70,6 +71,12 @@ describe('Campaign model', () => {
       return postcards;
     }
 
+    async function fetchAddress(id) {
+      return request(app)
+        .get(`/api/v1/addresses/${id}`)
+        .then(res => res.body);
+    }
+
     return request(app)
       .get(`/api/v1/campaigns/${campaign._id}`)
       .then(res => {
@@ -79,7 +86,14 @@ describe('Campaign model', () => {
           title: campaign.title, 
           description: campaign.description,
           recipient: campaign.recipient,
-          addressId: campaign.addressId,
+          addressId: {
+            _id: address._id,
+            city: address.city,
+            state: address.state,
+            street1: address.street1,
+            street2: address.street2,
+            zip: address.zip
+          },
           defaultPostcardId: campaign.defaultPostcardId,
           postcardIds: postcards,
         });
