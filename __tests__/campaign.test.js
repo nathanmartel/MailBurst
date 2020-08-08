@@ -9,7 +9,6 @@ describe('Campaign model', () => {
     const user = await getUser();
     const address = await getAddress();
     const defaultPostcard = await getPostcard();
-    const randomPostcard = await getPostcard();
 
     return request(app)
       .post('/api/v1/campaigns/')
