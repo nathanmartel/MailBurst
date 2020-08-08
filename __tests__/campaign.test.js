@@ -19,7 +19,6 @@ describe('Campaign model', () => {
         recipient: 'John Doe',
         addressId: address._id,
         defaultPostcardId: defaultPostcard._id,
-        postcardIds: [randomPostcard._id] 
       })
       .then(res => {
         expect(res.body).toEqual({
@@ -30,7 +29,7 @@ describe('Campaign model', () => {
           recipient: 'John Doe',
           addressId: address._id,
           defaultPostcardId: defaultPostcard._id,
-          postcardIds: [randomPostcard._id]
+          // postcards: expect.any(Array)
         });
       });
   });
@@ -49,7 +48,7 @@ describe('Campaign model', () => {
           recipient: expect.any(String),
           addressId: expect.any(String),
           defaultPostcardId: expect.any(String),
-          postcardIds: expect.any(Array),
+          // postcards: expect.any(Array),
         });
       });
   });
@@ -58,18 +57,7 @@ describe('Campaign model', () => {
   it('gets a specific campaign', async() => {
 
     const campaign = await getCampaign();
-    const postcards = await Promise.resolve(fetchPostcards(campaign.postcardIds));
     const address = await Promise.resolve(fetchAddress(campaign.addressId));
-
-    async function fetchPostcards(arr) {
-      const postcards = [];
-      for(const id of arr) {
-        await request(app)
-          .get(`/api/v1/postcards/${id}`)
-          .then(res => postcards.push(res.body));
-      }
-      return postcards;
-    }
 
     async function fetchAddress(id) {
       return request(app)
@@ -95,7 +83,7 @@ describe('Campaign model', () => {
             zip: address.zip
           },
           defaultPostcardId: campaign.defaultPostcardId,
-          postcardIds: postcards,
+          postcards: campaign.postcards,
         });
       });
   });

@@ -41,7 +41,6 @@ module.exports = async({ usersToCreate = 1, addressesToCreate = 1, campaignsToCr
     recipient: chance.name(),
     addressId: chance.pickone(addresses)._id,
     defaultPostcardId: chance.pickone(postcards)._id,
-    postcardIds: [chance.pickone(postcards)._id]
   })));
 
 };
