@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 
 beforeAll(() => {
-  connect();
+  connect('test');
 });
 
 beforeEach(() => {
