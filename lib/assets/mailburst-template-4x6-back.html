@@ -16,7 +16,7 @@
     margin: 0;
     padding: 0;
     background-color: white;
-    border: 1px solid #ddd;
+    /* border: 1px solid #ddd; */
   }
   #trim {
     position: absolute;
@@ -24,7 +24,7 @@
     height: 4in;
     left: 0.125in;
     top: 0.125in;
-    border: 1px solid red;
+    /* border: 1px solid red; */
   }
   #safe-area {
     position: absolute;
@@ -40,32 +40,32 @@
     height: 2.375in;
     right: 0.275in;
     bottom: 0.25in;
-    background-color: rgba(255, 0, 0, 0.1);
+    /* background-color: rgba(255, 0, 0, 0.1); */
   }
   #message-background {
     position: absolute;
-    width: 2.5in;
+    width: 2.625in;
     height: 4.25in;
     top: 0in;
     left: 0in;
     background-color: #f3f3f3;
   }
   #message-area {
-    position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 2in;
+    position: relative;
+    display: table;
+    width: 2.125in;
     height: 3.75in;
     top: .25in;
-    left: .3125in;
+    left: .375in;
     /* background-color: rgba(255, 0, 0, 0.2); */
   }
   #message {
+    display: table-cell;
+    vertical-align: middle;
     font-family: 'Lato';
     font-weight: 400;
     font-size: .122in;
-    /* background-color: rgba(255, 0, 0, 0.1) */
+    /* border: 1px solid red; */
   }
   #mailburst {
     position: absolute;
@@ -86,14 +86,13 @@
     <strong>Mailburst</strong>
   </div>
 
-  <!-- do not put text outside of the safe area -->
   <div id="message-background"></div>
   <div id="trim"></div>
   <div id="ink-free"></div>
   <!-- <div id="safe-area"></div> -->
   <div id="message-area">
     <div id="message">
-      {{backMessage}} Thank you so much for your donation given on June 17, 2015. You can rest assured that your money is going to a great cause. You will continue to get updates on our status on your WaterHealth dashboard.
+      {{backMessage}}
       <br><br>
       {{senderName}}<br />
       {{senderTitle}}
