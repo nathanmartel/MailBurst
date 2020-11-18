@@ -6,12 +6,20 @@ const chance = require('chance').Chance();
 
 module.exports = async({ usersToCreate = 1, addressesToCreate = 1, campaignsToCreate = 1, postcardsToCreate = 1 } = {}) => {
 
-  // Create specific seed user for model testing
+  // Create specific seed users for model testing
   await User.create({
     email: 'seed@test.com',
     password: 'seedtest',
     firstName: 'Seed',
-    lastName: 'Test'
+    lastName: 'Test',
+  });
+
+  await User.create({
+    email: 'admin@test.com',
+    password: 'admintest',
+    firstName: 'Admin',
+    lastName: 'Test',
+    role: 'admin'
   });
 
   const users = await User.create([...Array(usersToCreate)].map(() => ({
